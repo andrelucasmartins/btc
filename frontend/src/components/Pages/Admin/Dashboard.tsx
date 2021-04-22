@@ -5,16 +5,28 @@ import TableCell from '@material-ui/core/TableCell'
 import { makeStyles} from '@material-ui/core/styles'
 import { AttachMoney, SwapVert } from '@material-ui/icons'
 import { green, yellow, blue } from '@material-ui/core/colors'
+import { counterGrossAmountInvested } from '../../../utils/counterGrossAmountInvested'
+
+
+type TableProps = {
+  rows: {
+    date: string;
+    investiment: number;
+    nowBitcoin: number;
+    grossAmountInvested: number;
+    percentBitcoin: number;
+  }
+}
 
 const Tax = 0.45
 
 function createRow (
-  date: string,
-  investiment: number,
-  nowBitcoin: number,
+    date: string,
+    investiment: number,
+    nowBitcoin: number
   ) {
-  let grossAmountInvested = (investiment + (Tax*100)).toFixed(2)
-  const percentBitcoin = Tax
+    const grossAmountInvested = counterGrossAmountInvested(investiment, Tax)
+    const percentBitcoin = Tax
   return {
     date,
     investiment,
@@ -58,10 +70,10 @@ const useStyles = makeStyles({
   }
 })
 
-const Dashboard = memo((props: {}) => {
+const Dashboard = memo((props: TableProps) => {
   const classes = useStyles(props)
   const [list, setList] = useState(rows)
-  let total = list.map(l => Number(l.grossAmountInvested)).reduce((acc, total) => acc += total)
+  const total: number = rows.map(l => Number(l.grossAmountInvested)).reduce((acc, total) => acc += total)
   return (
     <>
       <Container>

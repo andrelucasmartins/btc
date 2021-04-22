@@ -27,7 +27,7 @@ function createRow (
   nowBitcoin: number,
   percentBitcoin: number
   ) {
-  let grossAmountInvested = (investiment + (percentBitcoin/100)).toFixed(2)
+  let grossAmountInvested = Number((investiment + (percentBitcoin/100)).toFixed(2))
 
   return {
     id,
@@ -73,7 +73,7 @@ export default function Extract() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow>
+                <TableRow key={row.id}>
                   <TableCell>{row.date}</TableCell>
                   <TableCell align='right'>R$ {row.nowBitcoin}</TableCell>
                   <TableCell align='right'>R$ {row.nowBitcoin}</TableCell>
@@ -85,14 +85,6 @@ export default function Extract() {
           </Table>
         </TableContainer>
       </Grid>
-      {/* <Grid container spacing={4}>
-        <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
-      </Grid> */}
     </Container>
   );
-  // return (
-  //   <div style={{ height: 400, width: '100%' }}>
-  //     <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
-  //   </div>
-  // );
 }
